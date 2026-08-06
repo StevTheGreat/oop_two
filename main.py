@@ -1,70 +1,85 @@
-def show_balance(balance):
-    print("*********************")
-    print(f"Your balance is ${balance:.2f}")
-    print("*********************")
+class BankAccount:
+    def __init__(self, account_number, account_name):
+        self.__account_number = account_number
+        self.__account_name = account_name
+        self.__balance = 0.0
 
-def deposit():
-    print("*********************")
-    amount = float(input("Enter an amount to be deposited: "))
-    print("*********************")
-    if amount < 0:
-        print("*********************")
-        print("That's not a valid amount")
-        print("*********************")
-        return 0
-    else:
-        return amount
+    def get_account_number(self):
+        return self.__account_number
 
-def withdraw(balance):
-    print("*********************")
-    amount = float(input("Enter amount to be withdrawn: "))
-    print("*********************")
+    def get_account_name(self):
+        return self.__account_name
 
-    if amount > balance:
+    def show_balance(self):
         print("*********************")
-        print("Insufficient funds")
+        print(f"Your balance is ₱{self.__balance:.2f}")
         print("*********************")
-        return 0
-    elif amount < 0:
+
+    def deposit(self):
         print("*********************")
-        print("Amount must be greater than 0")
+        try:
+            amount = float(input("Enter an amount to be deposited: "))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            print("*********************")
+            return
+
         print("*********************")
-        return 0
-    else:
-        return amount
+        if amount <= 0:
+            print("*********************")
+            print("Amount must be greater than 0")
+            print("*********************")
+        else:
+            self.__balance += amount
+            print(f"₱{amount:.2f} successfully deposited.")
+
+    def show_account_details(self):
+        print("*********************")
+        print(f"Account Number: {self.__account_number}")
+        print(f"Account Name: {self.__account_name}")
+        print("*********************")
+
 
 def main():
-    balance = 0
-    is_running = True
+    print("*********************")
+    print(" Create Your Bank Account ")
+    print("*********************")
+    
+    acc_num = float(input("Enter an Account Number: "))
+    acc_name = input("Enter an Account Name: ")
+    
+    user_account = BankAccount(acc_num, acc_name)
 
+    is_running = True
     while is_running:
-        print("*********************")
-        print("   Banking Program   ")
+        print("\n*********************")
+        print(" Banking Program ")
         print("*********************")
         print("1.Show Balance")
         print("2.Deposit")
-        print("3.Withdraw")
+        print("3.Account Details")
         print("4.Exit")
         print("*********************")
+        
         choice = input("Enter your choice (1-4): ")
-
+        
         if choice == '1':
-            show_balance(balance)
+            user_account.show_balance()
         elif choice == '2':
-            balance += deposit()
+            user_account.deposit()
         elif choice == '3':
-            balance -= withdraw(balance)
+            user_account.show_account_details()
         elif choice == '4':
             is_running = False
         else:
             print("*********************")
             print("That is not a valid choice")
             print("*********************")
-
+            
     print("*********************")
     print("Thank you! Have a nice day!")
     print("*********************")
 
-if __name__ == '__main__':
-    main()
 
+if __name__ == "__main__":
+    main()
